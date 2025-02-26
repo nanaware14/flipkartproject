@@ -135,6 +135,12 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+STATIC_URL="static/"
+STATICFILES_DIRS=[BASE_DIR/"static"]
+
+MEDIA_URL="/media/"
+MEDIA_ROOT=BASE_DIR/"media"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTHENTICATION_BACKENDS = [
     "social_core.backends.google.GoogleOAuth2",
@@ -146,5 +152,5 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_URL = "logout"
 LOGOUT_REDIRECT_URL = "/"
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ""
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ""
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "http://127.0.0.1:800/social-authcomplete/google-outh2/"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ["http://127.0.0.1:800","http://localhost:800"]
