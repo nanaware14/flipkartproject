@@ -179,3 +179,99 @@ def about(req):
 
 def contact(req):
     return render(req,'contact.html')
+
+
+def mobilelist(req):
+    if req.method=='GET':
+        allproducts=Product.productmanager.Mobile_list()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+    else:
+        allproducts=Product.objects.all()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+
+
+def clothlist(req):
+    if req.method=='GET':
+        allproducts=Product.productmanager.Cloths_list()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+    else:
+        allproducts=Product.objects.all()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+
+
+def shoselist(req):
+    if req.method=='GET':
+        allproducts=Product.productmanager.Shoes_list()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+    else:
+        allproducts=Product.objects.all()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+
+def Electronicslist(req):
+    if req.method=='GET':
+        allproducts=Product.productmanager.Electronics_list()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+    else:
+        allproducts=Product.objects.all()
+        print(allproducts)
+        context={'allproducts':allproducts}
+        return render(req,'index.html',context)
+
+
+def showpricerange(req):
+    if req.method=="GET":
+        return render(req,"index.html")
+    else:
+        r1=req.POST['min']
+        r2=req.POST["max"]
+        if r1 is not None and r2 is not None and r1.isdigit() and r2.isdigit():
+            allproducts=Product.productmanager.pricerange(r1,r2)
+            context={'allproducts':allproducts}
+            return render(req,'index.html',context)
+        else:
+            allproducts=Product.objects.all()
+            context={'allproducts0':allproducts}
+            return render(req,'index.html',context)
+
+
+def sortingbyprice(req):
+    sortoption=req.GET.get("sort")
+    if sortoption=="low_to_high":
+        allproducts=Product.objects.order_by("price")
+    elif sortoption=='high_to_low':
+        allproducts=Product.objects.order_by("-price")
+        print(allproducts)
+    else:
+        allproducts=Product.objects.all()
+    
+    context={"allproducts":allproducts}
+    return render(req,'index.html',context)
+
+from django.db.models import Q
+from django.contrib import messages
+def searchproduct(req):
+    query=req.GET["q"]
+    if query:
+        allproducts=Product.objects.filter(Q(productname__icontains=query)|Q(category__icontains=query)|Q(description__icontains=query))
+        if len(allproducts)==0:
+            messages.error(req,"No Iteam Found!!!!")
+        else:
+            allproducts=Product.objects.all()
+
+        context={"allproducts":allproducts}
+        return render(req,"index.html",context)
+    
