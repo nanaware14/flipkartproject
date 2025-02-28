@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Flipcart|Carts{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-10">
+            <div class="row">
+        <!--carts start here -->
+        {% for x in allcarts %}
+
+        <div class="col-md-4">
+            <img src="{{x.productid.images.url}}" alt="{{x.productid.productname}}"width="300px" height="400px">
+        
+
+        </div>
+
+        <div class='col-md-6'>
+            <div class="card-header fw-bold">
+                Product Details
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{x.productid.productname}}</h5>
+                <p class="card-text text-success fw-blod">spcial price</p>
+                <p class="card-text">
+                    <strong>{{x.productid.price}}/-</strong>
+                    &nbsp;
+                    <del>{{x.productid.price|add:x.productid.price}}/-</del>
+                    <span class="text-success">50% off</span>
+                    <p class="card-tex">{{x.productid.description}}</p>
+                   
+                    <ul>
+                        <p class="card-text fw-bold">Available Offers</p>
+                            <li>Display : Take your cinematic experience to the next level with 120Hz 3D Curved AMOLED display. The 1800 nits local peak brightness ensures outstanding visibility, even in direct sunlight.</li>
+                            <li>PROCESSOR : Powered by MediaTek Dimensity 7300 with 702K+ AnTuTu Score, 4nm TSMC Octa-core CPU architecture which gives you effortless multi-tasking. experience</li>
+                            <li>Design : iQOO Z9s Pro comes with 0.749cm Ultra Slim body with 5500mAh Battery. Along with 44W FlashCharge which brings you back to entertainment in no time. 50% Charge in just 30 mins. It is IP64 rated - Dust and Water Resistance.</li>
+                            <li>CAMERA: Capture colors & details with lifelike Accuracy with the 50MP Sony IMX882 OIS Camera with AURA Light. Features like AI Photo Enhance ensures No memory is blurry & with AI Erase snap worry-free & eliminate any unwanted objects & people from your photo.
+                            OPERATING SYSTEM : FunTouch OS 14 based on Android 14 with 2 years of Android & 3 years of security update.</li>
+                    </ul>
+                    <p class="card-text">Deliver by {{date}}| <span class="card-text">Free</span></p>
+                    <p class="card-text">10 day return policy</p>
+                    <strong>QTY:</strong>
+                    <a href="#"><button class="btn btn-danger">-</button></a>
+                    <input type="number" value="{{x.qty}}" style="width: 30px;">
+                    <a href="#"><button class="btn btn-success">+</button></a>
+                </p>
+                    <a class="btn btn-warning" href="#">Make Payment</a>
+                    <a class="btn btn-primary" href="#">Remove card</a>
+          
+        </div>
+        </div>
+        {% endfor %}
+        <!--carts end here-->
+</div>
+</div>
+
+        <!--totalsection start here-->
+        <div class="col-md-2">
+        <div class="row">
+            <h5 class="btn-denger text-black">total amount section</h5>
+            <h5><strong>total items:</strong></h5>
+            <hr>
+            <h5><strong>Total Amount:Rs </strong></h5>
+            <a href="#" class="btn btn-danger">make payment</a>
+        </div>
+        </div>
+        <!--totalsection end here-->
+    </div>
+</div>
+
+
+{% endblock %}
