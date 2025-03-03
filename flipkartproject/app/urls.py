@@ -23,5 +23,11 @@ urlpatterns = [
     path('sortingbyprice/',views.sortingbyprice,name="sortingbyprice"),
     path('searchproduct/',views.searchproduct,name="searchproduct"),
     path('showcarts/',views.showcarts,name="showcarts"),
-    path("addtocart/<productid>/",views.addtocart,name="addtocart")
+    path("addtocart/<productid>/",views.addtocart,name="addtocart"),
+    path("removecart/<productid>/",views.removecart,name="removecart"),
+    path("updateqty/<int:qv>/<productid>",views.updateqty,name="updateqty"),
+    path("addadress/",views.addadress,name="addadress"),
+    path("showaddress/",views.showaddress,name="showaddress")
+
+    
 ]

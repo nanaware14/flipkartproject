@@ -40,12 +40,12 @@
                     <p class="card-text">Deliver by {{date}}| <span class="card-text">Free</span></p>
                     <p class="card-text">10 day return policy</p>
                     <strong>QTY:</strong>
-                    <a href="#"><button class="btn btn-danger">-</button></a>
+                    <a href="/updateqty/0/{{x.productid.productid}}"><button class="btn btn-danger">-</button></a>
                     <input type="number" value="{{x.qty}}" style="width: 30px;">
-                    <a href="#"><button class="btn btn-success">+</button></a>
+                    <a href="/updateqty/1/{{x.productid.productid}}"><button class="btn btn-success">+</button></a>
                 </p>
-                    <a class="btn btn-warning" href="#">Make Payment</a>
-                    <a class="btn btn-primary" href="#">Remove card</a>
+                    <a class="btn btn-warning" href="/addadress">Make Payment</a>
+                    <a class="btn btn-primary" href="/removecart/{{x.productid.productid}}">Remove card</a>
           
         </div>
         </div>
@@ -61,7 +61,7 @@
             <h5><strong>total items:</strong></h5>
             <hr>
             <h5><strong>Total Amount:Rs </strong></h5>
-            <a href="#" class="btn btn-danger">make payment</a>
+            <a href="/addadress" class="btn btn-danger">make payment</a>
         </div>
         </div>
         <!--totalsection end here-->

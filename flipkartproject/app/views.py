@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from.models import Product,Cart,Orders
+from.models import Product,Cart,Orders,Address,Payment
 
 
 def index(req):
@@ -281,7 +281,7 @@ def showcarts(req):
     if username.is_authenticated:
       context={'allcarts':allcarts,"username":username}
     else:
-        allcarts=Cart.object.all()
+        allcarts=Cart.objects.all()
         context={'allcarts':allcarts}
 
     return render(req, 'showcarts.html',context)
@@ -306,3 +306,65 @@ def addtocart(req,productid):
         cartitem.qty=1
     cartitem.save()
     return redirect("/showcarts")
+
+
+def removecart(req,productid):
+    if req.user.is_authenticated:
+        userid=req.user
+    else:
+        userid=None
+
+    cartitems=Cart.objects.get(productid=productid,userid=userid)
+    cartitems.delete()
+    return redirect("/showcarts")
+
+
+def updateqty(req,qv,productid):
+    allcarts=Cart.objects.filter(productid=productid)
+    if qv==1:
+        total=allcarts[0].qty+1
+        allcarts.update(qty=total)
+    else:
+        if allcarts[0].qty>1:
+            total=allcarts[0].qty-1
+            allcarts.update(qty=total)
+        else:
+            allcarts=Cart.objects.filter(productid=productid)
+            allcarts.delete()
+    return redirect("/showcarts")
+
+
+from.forms import AddressForm
+
+def addadress(req):
+    if req.user.is_authenticated:
+        if req.method=="POST":
+            forms=AddressForm(req.POST)
+
+            if form.is_valid():
+                address=form.save(commit=False)
+                address.userid=req.user
+                address.save()
+                return redirect('/showcarts')
+
+            
+            else:
+                form=AddressForm()
+
+            context={'form':form}
+            return render(req, 'addadress.html',context)
+    else:
+        return redirect('/signin')
+
+
+def showaddress(req):
+    if req.user.is_authenticated:
+        addadress=Address.objects.filter(userid=req.user)
+        if req.method=="POST":
+            return redirect("/showcarts")
+        
+        context={'address':address}
+        return render(req,'showaddress.html',context)
+
+    else:
+        return redirect('/signin')
