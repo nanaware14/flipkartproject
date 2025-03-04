@@ -15,10 +15,6 @@ def index(req):
 
 
 def validate_password(password):
-    # Check minimum length
-    if len(password) < 8:
-        raise ValidationError("Password must be at least 8 characters long.")
-
     # Check maximum length
     if len(password) > 128:
         raise ValidationError("Password cannot exceed 128 characters.")
@@ -278,15 +274,16 @@ def searchproduct(req):
 def showcarts(req):
     username=req.user
     allcarts=Cart.objects.filter(userid=username.id)
+    print(allcarts,len(allcarts))
+    totalitems=len(allcarts)
+    totalamount=0
+    for x in allcarts:
+        totalamount+=x.productid.price*x.qty
     if username.is_authenticated:
-      context={'allcarts':allcarts,"username":username}
+      context={'allcarts':allcarts,"username":username,'totalitems':totalitems,"totalamount":totalamount}
     else:
-        allcarts=Cart.objects.all()
-        context={'allcarts':allcarts}
-
+        context={'allcarts':allcarts,"totalitems":totalitems,"totalamount":totalamount}
     return render(req, 'showcarts.html',context)
-
-
 
 
 def addtocart(req,productid):
@@ -339,27 +336,27 @@ from.forms import AddressForm
 def addadress(req):
     if req.user.is_authenticated:
         if req.method=="POST":
-            forms=AddressForm(req.POST)
+            form=AddressForm(req.POST)
 
             if form.is_valid():
                 address=form.save(commit=False)
                 address.userid=req.user
                 address.save()
-                return redirect('/showcarts')
+                return redirect('/showaddress')
 
             
-            else:
-                form=AddressForm()
+        else:
+            form=AddressForm()
 
-            context={'form':form}
-            return render(req, 'addadress.html',context)
+        context={'form':form}
+        return render(req, 'addadress.html',context)
     else:
         return redirect('/signin')
 
 
 def showaddress(req):
     if req.user.is_authenticated:
-        addadress=Address.objects.filter(userid=req.user)
+        address=Address.objects.filter(userid=req.user)
         if req.method=="POST":
             return redirect("/showcarts")
         
@@ -368,3 +365,12 @@ def showaddress(req):
 
     else:
         return redirect('/signin')
+
+import razorpay
+
+def payment(req):
+    client = razorpay.Client(auth=("rzp_test_wH0ggQnd7iT3nB", "eZseshY3oSsz2fcHZkTiSlCm"))
+
+    data = { "amount": 500, "currency": "INR", "receipt": "order_rcptid_11" }
+    payment = client.order.create(data=data) # Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 5000 paise
+    return render(req,'payment.html')

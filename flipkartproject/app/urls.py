@@ -27,7 +27,9 @@ urlpatterns = [
     path("removecart/<productid>/",views.removecart,name="removecart"),
     path("updateqty/<int:qv>/<productid>",views.updateqty,name="updateqty"),
     path("addadress/",views.addadress,name="addadress"),
-    path("showaddress/",views.showaddress,name="showaddress")
+    path("showaddress/",views.showaddress,name="showaddress"),
+    path("payment/",views.payment,name="payment")
+
 
     
 ]

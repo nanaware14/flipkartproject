@@ -58,15 +58,18 @@
         <div class="col-md-2">
         <div class="row">
             <h5 class="btn-denger text-black">total amount section</h5>
-            <h5><strong>total items:</strong></h5>
+            <h5><strong>total items:{{totalitems}}</strong></h5>
             <hr>
-            <h5><strong>Total Amount:Rs </strong></h5>
-            <a href="/addadress" class="btn btn-danger">make payment</a>
+            <h5><strong>Total Amount:Rs {{totalamount}}/- </strong></h5>
+            
+            {% if totalitems >= 1 %}
+            <a href="/addadress"><button class="btn btn-danger">make payment</a>
+            {% else %}
+            <a href="#"><button class="btn btn-danger" disabled>make payment</button></a>
+            {% endif %}
         </div>
         </div>
         <!--totalsection end here-->
     </div>
 </div>
-
-
 {% endblock %}

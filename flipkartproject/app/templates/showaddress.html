@@ -19,17 +19,18 @@
                     </label>
                 </div>
 
-                {%% empty }
+                {% empty %}
                 <div class="alert alert-warning">
                     No save address found !
                 </div>
                 {% endfor %}
             </div>
         </form>
+
+        <a href="/payment"><input type="submit" class="btn btn-primary" value="proceed to payment"></a>
+        <a href="/addadress"> <input type="button" class="btn btn-primary" value="cancel"></a>
     </div>
 </div>
-
-
 
 
 {% endblock %}
