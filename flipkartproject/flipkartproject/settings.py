@@ -154,3 +154,14 @@ LOGOUT_REDIRECT_URL = "/"
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "http://127.0.0.1:800/social-authcomplete/google-outh2/"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ["http://127.0.0.1:800","http://localhost:800"]
+
+
+
+#host mail
+
+# EMAIL_BACKEND="dajngo.core.mail.backend.smtp.EmailBackend"
+# EMAIL_HOST="smtp.gmail.com"
+# EMAIL_USE_TLS=True
+# EMAIL_PORT=587
+# EMAIL_HOST_USER="nanaware406@gmail.com"
+# EMAIL_HOST_PASSWORD="aucr qlpm xewj gism"
