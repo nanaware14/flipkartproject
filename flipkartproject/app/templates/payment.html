@@ -5,9 +5,9 @@
 <div class="container">
     <div class="row">
         <h3>total amount :{{amount}}</h3>
-        <!-- {% if error %}
+        {% if error %}
         <mark><h1>{{error}}</h1></mark>
-        {% endif %} -->
+        {% endif %}
 
         <button id="rzp-button1">Pay with Razorpay</button>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -19,11 +19,14 @@ var options = {
     "name": "Acme Corp",
     "description": "Test Transaction",
     "image": "https://example.com/your_logo",
+    "order_id":"{{data.id}}",
     // "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response){
-        alert(response.razorpay_payment_id);
+        // alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
+        // alert(response.razorpay_signature)
+        alert("payment done successfuly")
+        window.location.href=window.location.origin+'/showorders'
     },
     "prefill": {
         "name": "Gaurav Kumar",
@@ -39,13 +42,15 @@ var options = {
 };
 var rzp1 = new Razorpay(options);
 rzp1.on('payment.failed', function (response){
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+        // alert(response.error.code);
+        // alert(response.error.description);
+        // alert(response.error.source);
+        // alert(response.error.step);
+        // alert(response.error.reason);
+        // alert(response.error.metadata.order_id);
+        // alert(response.error.metadata.payment_id);
+        alert("transection cancel.try again");
+        window.location.href=window.location.origin+'/showorders'
 });
 document.getElementById('rzp-button1').onclick = function(e){
     rzp1.open();

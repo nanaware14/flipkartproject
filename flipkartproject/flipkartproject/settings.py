@@ -163,5 +163,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ["http://127.0.0.1:800","http://localhost:800
 # EMAIL_HOST="smtp.gmail.com"
 # EMAIL_USE_TLS=True
 # EMAIL_PORT=587
-# EMAIL_HOST_USER="nanaware406@gmail.com"
-# EMAIL_HOST_PASSWORD="aucr qlpm xewj gism"
+# EMAIL_HOST_USER="vidnanaware8@gmail.com"
+# EMAIL_HOST_PASSWORD="bxhb ubhg ijnl umjr"

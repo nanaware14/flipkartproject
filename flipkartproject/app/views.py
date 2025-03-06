@@ -379,9 +379,6 @@ def payment(req):
             print(totalamount)
             userid=req.user
 
-            client = razorpay.Client(auth=("rzp_test_wH0ggQnd7iT3nB", "eZseshY3oSsz2fcHZkTiSlCm"))
-            data = { "amount": totalamount*100, "currency": "INR", "receipt": "order_rcptid_11" }
-            payment = client.order.create(data=data) # Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             
             for items in cartitems:
                 orderid=random.randrange(1000,9000000)
@@ -389,16 +386,21 @@ def payment(req):
                 orderdata.save()
 
                 receiptid=random.randrange(10000000,80000000)
-                paymentdata=Payment.objects.create(receiptid=receiptid,orderid=orderdata,userid=userid,totalprice=totalamount)
+                paymentdata=Payment.objects.create(reciptid=receiptid,orderid=orderdata,userid=userid,totalprice=totalamount)
                 paymentdata.save()
             print(orderid,receiptid)
+
+            client = razorpay.Client(auth=("rzp_test_wH0ggQnd7iT3nB", "eZseshY3oSsz2fcHZkTiSlCm"))
+            data = { "amount": totalamount*100, "currency": "INR", "receipt": str(reciptid) }
+            payment = client.order.create(data=data) # Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            
             cartitems.delete()
 
-            subject=f"Flipkart payment status for your order={oderid}"
-            msg=f"hii {userid} thank you for using our service {tottalamount}"
-            emailfrom= settings.EMAIL_HOST_USER
-            receiver=[userid]
-            send_mail(subject,msg,emailfrom,rereceiver)
+            # subject=f"Flipkart payment status for your order={oderid}"
+            # msg=f"hii {userid} thank you for using our service {tottalamount}"
+            # emailfrom= settings.EMAIL_HOST_USER
+            # receiver=[userid]
+            # send_mail(subject,msg,emailfrom,rereceiver)
 
             context={"data":payment,"amount":totalamount}
 
@@ -407,3 +409,29 @@ def payment(req):
             context["error"]="An error occured while creating payment. Please try again!"
     
     return render(req,'payment.html',context)
+
+
+
+def showorders(req):
+    if req.user.is_authenticated:
+        allpayment=Payment.objects.filter(userid=req.user).select_related("productid")
+        context={'allpayment':allpayment}
+        return render(req,'showorders.html',context)
+
+
+
+#seller operation (CRUD)
+
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
+from django.views.generic.list import ListView
+class ProductRegister(CreateView):
+    model=Product
+    fields="__all__"
+    success_url="/"
+
+class ProductList(ListView):
+    model=Product
+    def get_forms(self,form_class=None):
+        user=super().request.user
+        return Product.objects.filter(userid=user)
+        

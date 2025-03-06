@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% load static %}
+<title>{% block title %}FlipKart|register product{% endblock %}</title>
+{% block body %}
+<div class="conta">
+    <form method="post" anctype="multipart/form-date">
+        {% csrf_token %}
+        <table class="table table-bordered">
+            {{form.as_table}}
+        </table>
+        <br>
+        <input type="submit" value="Register">
+        <a href="/"><button>cancle</button></a>
+    </form>
+</div>
+{% endblock %}
+<body>
