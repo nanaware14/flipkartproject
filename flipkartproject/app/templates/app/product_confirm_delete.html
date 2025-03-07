@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} FlipKart|deleteproduct{% endblock %}
+
+{% block body %}
+<div class="containe">
+    <div class="row">
+        <form method="post">
+            {% csrf_token %}
+            <h3>Are you sure want to deleted to remove name:{{object.productname}} and ID={{object.productid}}</h3>
+            <input type="submit" value="confirm">
+        </form>
+        <a href="/Productlist"><input type="button" value="cancel"></a>
+    </div>
+</div>
+
+{% endblock %}

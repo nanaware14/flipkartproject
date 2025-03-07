@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-
 # Create your views here.
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -11,8 +10,6 @@ def index(req):
     allproducts=Product.objects.all()
     context={"allproducts":allproducts}
     return render(req, "index.html",context)
-
-
 
 def validate_password(password):
     # Check maximum length
@@ -424,14 +421,32 @@ def showorders(req):
 
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.views.generic.list import ListView
+
 class ProductRegister(CreateView):
     model=Product
-    fields="__all__"
-    success_url="/"
+    # fields="__all__"
+    fields=["productid","category","description","price","images"]
+    success_url="/ProductList"
+
+    def form_valid(self,form):
+        form.instance.userid=self.request.user
+        return super().form_valid(form)
 
 class ProductList(ListView):
     model=Product
-    def get_forms(self,form_class=None):
-        user=super().request.user
+    def get_queryset(self):
+        user=self.request.user
         return Product.objects.filter(userid=user)
         
+class ProductDelete(DeleteView):
+    model=Product
+    success_url='/ProductList'
+
+
+
+class ProductUpdate(UpdateView):
+    model=Product
+    template_name_suffix="_update_form"
+    # fields="__all__"
+    fields=["productname","category","description","price","images"]
+    success_url="/ProductList"
